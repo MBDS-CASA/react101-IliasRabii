@@ -39,8 +39,8 @@ function App() {
   return (
     <>
       <Header />
-       <Header />
-        <Header />
+      <MainContent />
+
 <h1> ilias themost famous one in any contry</h1>
 <Content />
  
