@@ -1,8 +1,10 @@
+import logo from "../assets/logoEmsi.webp";
+
 function Header() {
   return (
     <header style={{ textAlign: "center", padding: "20px" }}>
       <img
-        src="https://reactjs.org/logo-og.png"
+        src={logo}
         alt="Logo formation"
         width="100"
       />
