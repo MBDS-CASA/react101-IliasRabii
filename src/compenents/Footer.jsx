@@ -7,7 +7,8 @@ function Footer() {
         width: "100%",
         textAlign: "center",
         padding: "10px",
-        backgroundColor: "#f1f1f1"
+        backgroundColor: "#111",
+        color: "white"
       }}
     >
       Tous droits réservés - RABII Ilyass
