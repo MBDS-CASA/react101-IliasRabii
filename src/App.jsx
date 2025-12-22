@@ -40,6 +40,7 @@ function App() {
     <>
       <Header />
       <MainContent />
+      <Footer />
 
 <h1> ilias themost famous one in any contry</h1>
 <Content />
