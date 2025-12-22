@@ -3,12 +3,12 @@ import MainContent from "./compenents/MainContent";
 import Footer from "./compenents/Footer";
 
 function App() {
-  return (
-    <>
+ return (
+    <div className="app">
       <Header />
       <MainContent />
       <Footer />
-    </>
+    </div>
   );
 }
 
