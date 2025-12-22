@@ -1,16 +1,19 @@
-function Menu() {
-  const handleClick = (item) => {
-    // Vous pourrez remplacer l'alert par une navigation plus tard
-    console.log(`Navigation vers : ${item}`);
-  };
+// src/compenents/Menu.jsx
+function Menu({ activePage, setActivePage }) {
+  const menuItems = ["Notes", "Étudiants", "Matières", "À propos"];
 
   return (
     <nav className="menu">
       <ul>
-        <li onClick={() => handleClick("Notes")}>Notes</li>
-        <li onClick={() => handleClick("Étudiants")}>Étudiants</li>
-        <li onClick={() => handleClick("Matières")}>Matières</li>
-        <li onClick={() => handleClick("À propos")}>À propos</li>
+        {menuItems.map((item) => (
+          <li
+            key={item}
+            className={activePage === item ? "active" : ""}
+            onClick={() => setActivePage(item)}
+          >
+            {item}
+          </li>
+        ))}
       </ul>
     </nav>
   );

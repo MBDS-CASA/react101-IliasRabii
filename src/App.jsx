@@ -1,15 +1,24 @@
+import { useState } from "react";
 import Header from "./compenents/Header";
-import MainContent from "./compenents/MainContent";
 import Footer from "./compenents/Footer";
 import Menu from "./compenents/Menu";
+import ContentDisplay from "./compenents/ContentDisplay"; // Import du nouveau composant
 import "./App.css";
 
 function App() {
+  // État pour savoir quelle page est affichée (par défaut "Notes")
+  const [activePage, setActivePage] = useState("Notes");
+
   return (
     <div className="app">
-      <Menu />
+      {/* On passe la page active et la fonction pour la changer au Menu */}
+      <Menu activePage={activePage} setActivePage={setActivePage} />
+      
       <Header />
-      <MainContent />
+      
+      {/* On affiche le composant qui change selon la page */}
+      <ContentDisplay page={activePage} />
+      
       <Footer />
     </div>
   );

@@ -246,6 +246,14 @@ body {
     height: auto;
     padding: 10px;
   }
+  /* Dans src/App.css */
+
+.menu li.active {
+  color: #00ff99; /* Vert fluo */
+  border-left: 3px solid #00ff99;
+  padding-left: 15px;
+  background: rgba(255, 255, 255, 0.1);
+}
   .menu ul { flex-direction: row; justify-content: space-around; width: 100%; }
   .menu li { writing-mode: horizontal-tb; transform: none; font-size: 0.8rem; }
   .menu li:hover { transform: translateY(-2px); }
