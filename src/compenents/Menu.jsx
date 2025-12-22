@@ -1,6 +1,7 @@
 function Menu() {
   const handleClick = (item) => {
-    alert(`Vous avez cliqué sur : ${item}`);
+    // Vous pourrez remplacer l'alert par une navigation plus tard
+    console.log(`Navigation vers : ${item}`);
   };
 
   return (
