@@ -1,85 +1,127 @@
-/* ===== APP LAYOUT ===== */
-.app {
-  display: flex;
-  flex-direction: column;
-  align-items: center !important;
-  min-height: 100vh;
+/* =========================
+   RESET
+   ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* =========================
+   BODY & ROOT LAYOUT
+   ========================= */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top, #2a2a2a, #121212);
+  color: #fff;
+  overflow-x: hidden; /* Prevents horizontal scrollbar */
+}
 
-/* ===== HEADER ===== */
-.header {
-  max-width: 900px;
+/* TARGETING #root directly */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers content Vertically */
+  align-items: center;     /* Centers content Horizontally */
+  text-align: center;      /* Centers text inside elements */
+  padding-bottom: 80px;    /* Prevents content from hiding behind fixed footer */
   width: 100%;
-  text-align: center;
-  padding: 60px 20px 40px;
+}
+
+/* =========================
+   COMPONENTS
+   ========================= */
+
+/* Header */
+.header {
+  margin-bottom: 20px;
 }
 
 .header img {
   width: 120px;
-  margin-bottom: 25px;
-  filter: drop-shadow(0 0 12px rgba(0, 255, 150, 0.45));
-  transition: transform 0.3s ease;
-}
-
-.header img:hover {
-  transform: scale(1.08);
+  margin-bottom: 15px;
+  display: inline-block; /* Helps with text-align center */
 }
 
 .header h1 {
-  font-size: 3.2rem;
-  margin-bottom: 12px;
-  letter-spacing: 1px;
+  font-size: 3rem;
+  margin-bottom: 5px;
 }
 
 .header h2 {
-  font-size: 1.4rem;
-  font-weight: 300;
-  opacity: 0.85;
-}
-
-/* ===== MAIN CONTENT (CARD) ===== */
-.main-content {
-  max-width: 600px;
-  margin: auto;
-  padding: 30px 25px;
-  text-align: center;
   font-size: 1.2rem;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(6px);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  opacity: 0.8;
+  font-weight: 400;
 }
 
+/* Main Content Card */
+.main-content {
+  width: 90%;
+  max-width: 450px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05); /* Glass effect */
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-/* ===== FOOTER ===== */
+.date-text {
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  color: #ddd;
+}
+
+/* Button */
+.btn-random {
+  padding: 12px 24px;
+  margin-bottom: 25px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #00ff99, #00cc88);
+  color: #121212;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-random:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 255, 153, 0.4);
+}
+
+.btn-random:active {
+  transform: scale(0.95);
+}
+
+/* Note Card */
+.note-card {
+  text-align: left; /* Keep note text readable */
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+}
+
+.note-good {
+  border-left: 5px solid #00ff99;
+}
+
+.note-bad {
+  border-left: 5px solid #ff5555;
+}
+
+/* Footer */
 .footer {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  text-align: center;
-  padding: 14px;
-  background: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  background: rgba(18, 18, 18, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.9rem;
-  backdrop-filter: blur(6px);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 600px) {
-  .header h1 {
-    font-size: 2.2rem;
-  }
-
-  .header h2 {
-    font-size: 1.1rem;
-  }
-
-  .main-content {
-    font-size: 1rem;
-    padding: 20px;
-  }
+  color: #888;
 }
