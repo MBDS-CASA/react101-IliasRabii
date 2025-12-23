@@ -2,23 +2,25 @@ import { useState } from "react";
 import Header from "./compenents/Header";
 import Footer from "./compenents/Footer";
 import Menu from "./compenents/Menu";
-import Notes from "./compenents/Notes"; // <--- Import du tableau
+import Notes from "./compenents/Notes";
+import Students from "./compenents/Students"; // Nouvel import
+import Subjects from "./compenents/Subjects"; // Nouvel import
+import About from "./compenents/About";       // Nouvel import
 import "./App.css";
 
 function App() {
   const [activePage, setActivePage] = useState("Notes");
 
-  // Cette fonction choisit quel composant afficher selon le menu
   const renderContent = () => {
     switch (activePage) {
       case "Notes":
         return <Notes />;
       case "Étudiants":
-        return <div className="main-content">Contenu Étudiants à venir...</div>;
+        return <Students />;
       case "Matières":
-        return <div className="main-content">Contenu Matières à venir...</div>;
+        return <Subjects />;
       case "À propos":
-        return <div className="main-content">Contenu À propos à venir...</div>;
+        return <About />;
       default:
         return <Notes />;
     }
@@ -28,12 +30,9 @@ function App() {
     <div className="app">
       <Menu activePage={activePage} setActivePage={setActivePage} />
       <Header />
-      
-      {/* Zone de contenu dynamique */}
       <div style={{ width: "90%", maxWidth: "800px", margin: "0 auto 100px" }}>
          {renderContent()}
       </div>
-
       <Footer />
     </div>
   );
