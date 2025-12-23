@@ -263,6 +263,24 @@ body {
 .fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
+/* =========================
+   ANIMATIONS
+   ========================= */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px); /* Part de plus bas */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Arrive à sa place */
+  }
+}
+
+.fade-in {
+  /* Le "forwards" est important pour qu'elle reste à la fin */
+  animation: slideIn 0.6s ease-out forwards; 
+}
 .menu li.active {
   color: #00ff99; /* Vert fluo */
   border-left: 3px solid #00ff99;
