@@ -1,19 +1,24 @@
 import { useState } from "react";
 import { 
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, 
-  TextField, TablePagination, TableSortLabel 
+  TextField, TablePagination, TableSortLabel, IconButton 
 } from "@mui/material";
+// NOUVEAUX IMPORTS
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useNavigate } from "react-router-dom";
 import notesData from "../data.json";
 
 function Students() {
+  const navigate = useNavigate(); // Hook de navigation
+  
   // --- ÉTATS ---
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("lastname"); // Tri par nom par défaut
+  const [orderBy, setOrderBy] = useState("lastname");
 
-  // 1. Extraire les étudiants uniques (Même logique qu'avant)
+  // 1. Extraire les étudiants uniques
   const uniqueStudents = notesData.reduce((acc, current) => {
     const x = acc.find(item => item.student.firstname === current.student.firstname && item.student.lastname === current.student.lastname);
     if (!x) return acc.concat([current]);
@@ -27,13 +32,13 @@ function Students() {
     setOrderBy(property);
   };
 
-  // 3. Filtrage (Recherche)
+  // 3. Filtrage
   const filteredStudents = uniqueStudents.filter((item) => 
     item.student.firstname.toLowerCase().includes(search.toLowerCase()) ||
     item.student.lastname.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 4. Tri des données filtrées
+  // 4. Tri
   const sortedStudents = filteredStudents.sort((a, b) => {
     const valA = a.student[orderBy];
     const valB = b.student[orderBy];
@@ -51,7 +56,6 @@ function Students() {
   return (
     <Paper style={{ backgroundColor: "rgba(255,255,255,0.05)", padding: "20px", color: "white" }}>
       
-      {/* BARRE DE RECHERCHE */}
       <TextField
         label="Rechercher un étudiant..."
         variant="outlined"
@@ -66,7 +70,6 @@ function Students() {
         <Table aria-label="students table">
           <TableHead>
             <TableRow>
-              {/* Colonne PRÉNOM triable */}
               <TableCell style={{ color: "#00ff99", fontWeight: "bold" }}>
                 <TableSortLabel
                   active={orderBy === "firstname"}
@@ -78,7 +81,6 @@ function Students() {
                 </TableSortLabel>
               </TableCell>
 
-              {/* Colonne NOM triable */}
               <TableCell style={{ color: "#00ff99", fontWeight: "bold" }}>
                 <TableSortLabel
                   active={orderBy === "lastname"}
@@ -91,6 +93,9 @@ function Students() {
               </TableCell>
 
               <TableCell style={{ color: "#00ff99", fontWeight: "bold" }}>ID</TableCell>
+              
+              {/* NOUVELLE COLONNE ACTIONS */}
+              <TableCell style={{ color: "#00ff99", fontWeight: "bold" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -99,13 +104,22 @@ function Students() {
                 <TableCell style={{ color: "white" }}>{note.student.firstname}</TableCell>
                 <TableCell style={{ color: "white" }}>{note.student.lastname}</TableCell>
                 <TableCell style={{ color: "#aaa" }}>{note.student.id}</TableCell>
+                
+                {/* BOUTON VOIR DETAILS */}
+                <TableCell>
+                  <IconButton 
+                    onClick={() => navigate(`/etudiants/${note.student.id}`)}
+                    style={{ color: "#00bcd4" }}
+                  >
+                    <VisibilityIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      {/* PAGINATION */}
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"

@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { 
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, 
-  TextField, TablePagination, TableSortLabel 
+  TextField, TablePagination, TableSortLabel, IconButton 
 } from "@mui/material";
+// NOUVEAUX IMPORTS
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useNavigate } from "react-router-dom";
 import notesData from "../data.json";
 
 function Subjects() {
+  const navigate = useNavigate(); // Hook de navigation
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -14,23 +19,21 @@ function Subjects() {
 
   // 1. Matières uniques
   const uniqueSubjects = [...new Set(notesData.map(item => item.course))];
-
-  // 2. Transformer en objets pour le tri (car c'est juste des strings au début)
   const subjectsObjects = uniqueSubjects.map(sub => ({ course: sub, prof: "Prof. Démo" }));
 
-  // 3. Filtrage
+  // 2. Filtrage
   const filteredSubjects = subjectsObjects.filter((item) => 
     item.course.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 4. Tri
+  // 3. Tri
   const sortedSubjects = filteredSubjects.sort((a, b) => {
     if (a[orderBy] < b[orderBy]) return order === "asc" ? -1 : 1;
     if (a[orderBy] > b[orderBy]) return order === "asc" ? 1 : -1;
     return 0;
   });
 
-  // 5. Pagination
+  // 4. Pagination
   const paginatedSubjects = sortedSubjects.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -69,6 +72,9 @@ function Subjects() {
                 </TableSortLabel>
               </TableCell>
               <TableCell style={{ color: "#00ff99", fontWeight: "bold" }}>Professeur</TableCell>
+              
+              {/* NOUVELLE COLONNE ACTIONS */}
+              <TableCell style={{ color: "#00ff99", fontWeight: "bold" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -76,6 +82,16 @@ function Subjects() {
               <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell style={{ color: "white", fontWeight: "bold" }}>{row.course}</TableCell>
                 <TableCell style={{ color: "#aaa" }}>{row.prof}</TableCell>
+                
+                {/* BOUTON VOIR DETAILS */}
+                <TableCell>
+                  <IconButton 
+                    onClick={() => navigate(`/matieres/${row.course}`)}
+                    style={{ color: "#00bcd4" }}
+                  >
+                    <VisibilityIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
