@@ -1,15 +1,18 @@
 /* =========================
-   VARIABLES & RESET
+   VARIABLES & FONTS
    ========================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 :root {
-  --bg-color: #121212;
-  --card-bg: rgba(255, 255, 255, 0.05);
+  --bg-color: #0f0f19;
+  --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --primary-green: #00ff99;
-  --primary-red: #ff4757;
+  --primary-green: #00ff9d;
+  --primary-blue: #00bcd4;
   --text-main: #ffffff;
   --text-muted: #a0a0a0;
-  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --sidebar-width: 250px;
+  --font-main: 'Poppins', sans-serif;
 }
 
 * {
@@ -20,7 +23,7 @@
 
 body {
   font-family: var(--font-main);
-  background: radial-gradient(circle at top center, #2c3e50, var(--bg-color) 80%);
+  background-color: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
@@ -31,11 +34,113 @@ body {
    ========================= */
 .app {
   display: flex;
+  min-height: 100vh;
+}
+
+/* Zone de contenu à droite du menu */
+.content-area {
+  flex: 1; /* Prend tout l'espace restant */
+  margin-left: var(--sidebar-width); /* Laisse la place au menu fixe */
+  padding: 40px;
+  padding-bottom: 80px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding-bottom: 80px; /* Espace pour le footer */
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   ARRIÈRE-PLAN ANIMÉ (BLOBS)
+   ========================= */
+.background-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none; /* Pour pouvoir cliquer à travers */
+}
+
+.blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: moveBlob 20s infinite alternate ease-in-out;
+}
+
+.blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--primary-green); animation-duration: 25s; }
+.blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: var(--primary-blue); animation-delay: -5s; animation-duration: 18s; }
+.blob-3 { top: 40%; left: 30%; width: 300px; height: 300px; background: purple; animation-delay: -10s; }
+
+@keyframes moveBlob {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 50px) scale(1.1); }
+}
+
+/* =========================
+   MENU (SIDEBAR PRO)
+   ========================= */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: rgba(15, 15, 25, 0.85); /* Fond foncé semi-transparent */
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.menu-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: var(--primary-green);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Style des liens NavLink */
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 20px;
+  color: var(--text-muted);
+  text-decoration: none; /* Enlève le soulignement */
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.menu-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  transform: translateX(5px);
+}
+
+.menu-link.active {
+  background: linear-gradient(90deg, rgba(0, 255, 157, 0.1), transparent);
+  border-left: 4px solid var(--primary-green);
+  color: var(--primary-green);
+}
+
+.menu-icon {
+  font-size: 1.4rem !important;
 }
 
 /* =========================
@@ -43,175 +148,64 @@ body {
    ========================= */
 .header-container {
   text-align: center;
-  padding: 40px 20px;
-  animation: fadeIn 0.8s ease-out;
+  margin-bottom: 40px;
 }
 
 .header-container img {
-  width: 140px;
+  width: 120px;
   margin-bottom: 15px;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
 }
 
 .header-container h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(to right, #fff, #aaa);
+  background: linear-gradient(to right, white, #ccc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .header-container h2 {
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  font-weight: 400;
-  margin-top: 10px;
-}
-
-/* =========================
-   MENU (SIDEBAR STYLE)
-   ========================= */
-.menu {
-  position: fixed;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  padding: 20px 10px;
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  z-index: 100;
-  transition: all 0.3s ease;
-}
-
-.menu ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.menu li {
-  writing-mode: vertical-rl; /* Texte vertical pour le style */
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  cursor: pointer;
-  color: var(--text-muted);
-  padding: 10px 5px;
-  transition: color 0.2s, transform 0.2s;
-  font-size: 0.9rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.menu li:hover {
-  color: var(--primary-green);
-  text-shadow: 0 0 8px var(--primary-green);
-  transform: rotate(180deg) translateY(-5px);
-}
-
-/* =========================
-   MAIN CONTENT
-   ========================= */
-.main-content {
-  width: 90%;
-  max-width: 500px;
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 40px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  margin-top: 10px;
-}
-
-.date-text {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  margin-bottom: 30px;
-  background: rgba(0,0,0,0.3);
-  display: inline-block;
-  padding: 8px 16px;
-  border-radius: 50px;
-}
-
-/* Bouton */
-.btn-random {
-  padding: 14px 35px;
-  border-radius: 50px;
-  border: none;
   font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  background: linear-gradient(135deg, #00ff99 0%, #00cc88 100%);
-  color: #1a1a1a;
-  box-shadow: 0 4px 15px rgba(0, 255, 153, 0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin-bottom: 30px;
-}
-
-.btn-random:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(0, 255, 153, 0.5);
-}
-
-.btn-random:active {
-  transform: scale(0.95);
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-top: 5px;
 }
 
 /* =========================
-   NOTE CARD
+   MAIN CONTENT & TABLES
    ========================= */
-.note-card {
-  text-align: left;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 25px;
-  border-radius: 15px;
-  border-left: 5px solid transparent;
-  transition: all 0.3s ease;
-  position: relative;
+.fade-in {
+  width: 100%;
+  max-width: 1000px; /* Largeur max du tableau */
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+/* Tableau Material UI Override */
+.MuiPaper-root {
+  background-color: var(--glass-bg) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+  border-radius: 16px !important;
   overflow: hidden;
 }
 
-.note-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+.MuiTableCell-root {
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  color: var(--text-muted) !important;
 }
 
-.note-info {
-  margin-bottom: 8px;
-  font-size: 1rem;
-  color: #ddd;
+.MuiTableCell-head {
+  color: var(--primary-green) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.note-badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  background: rgba(255,255,255,0.1);
-  padding: 5px 15px;
-  border-radius: 8px;
+.MuiTableRow-root:hover {
+  background-color: rgba(255,255,255,0.03);
 }
-
-/* Validation visuelle */
-.note-good {
-  border-left-color: var(--primary-green);
-  box-shadow: inset 10px 0 20px -10px rgba(0, 255, 153, 0.1);
-}
-.note-good .note-badge { color: var(--primary-green); }
-
-.note-bad {
-  border-left-color: var(--primary-red);
-  box-shadow: inset 10px 0 20px -10px rgba(255, 71, 87, 0.1);
-}
-.note-bad .note-badge { color: var(--primary-red); }
 
 /* =========================
    FOOTER
@@ -219,78 +213,47 @@ body {
 .footer {
   position: fixed;
   bottom: 0;
-  width: 100%;
-  text-align: center;
+  left: var(--sidebar-width); /* Décalé à droite */
+  width: calc(100% - var(--sidebar-width));
   padding: 15px;
-  background: rgba(18, 18, 18, 0.95);
+  background: rgba(15, 15, 25, 0.95);
   border-top: 1px solid var(--glass-border);
-  font-size: 0.85rem;
+  text-align: center;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  letter-spacing: 1px;
+  z-index: 100;
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
+/* =========================
+   ANIMATIONS & MOBILE
+   ========================= */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
-  .menu {
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    flex-direction: row;
-    height: auto;
-    padding: 10px;
-  }
-  /* Dans src/App.css */
-/* Animation d'apparition */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px); /* Léger décalage vers le bas */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Classe à appliquer au contenu */
-.fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-/* =========================
-   ANIMATIONS
-   ========================= */
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(30px); /* Part de plus bas */
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0); /* Arrive à sa place */
-  }
-}
-
-.fade-in {
-  /* Le "forwards" est important pour qu'elle reste à la fin */
-  animation: slideIn 0.6s ease-out forwards; 
-}
-.menu li.active {
-  color: #00ff99; /* Vert fluo */
-  border-left: 3px solid #00ff99;
-  padding-left: 15px;
-  background: rgba(255, 255, 255, 0.1);
-}
-  .menu ul { flex-direction: row; justify-content: space-around; width: 100%; }
-  .menu li { writing-mode: horizontal-tb; transform: none; font-size: 0.8rem; }
-  .menu li:hover { transform: translateY(-2px); }
+  :root { --sidebar-width: 0px; }
   
-  .header-container h1 { font-size: 1.8rem; }
-  .app { padding-top: 60px; } /* Espace pour le menu mobile */
+  .menu {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    border-right: none;
+    border-top: 1px solid var(--glass-border);
+  }
+  
+  .menu-title, .menu-text { display: none; }
+  .menu ul { flex-direction: row; width: 100%; justify-content: space-around; }
+  .menu-link { padding: 10px; flex-direction: column; gap: 0; border-left: none; }
+  .menu-link.active { border-bottom: 3px solid var(--primary-green); border-left: none; background: transparent; }
+  
+  .content-area { margin-left: 0; padding: 20px; padding-bottom: 100px; }
+  .footer { left: 0; width: 100%; bottom: 70px; }
 }

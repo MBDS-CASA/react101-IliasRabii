@@ -4,11 +4,12 @@ function Header() {
   return (
     <header className="header-container">
       <img src={logo} alt="Logo formation" />
-      <h1>Introduction à React</h1>
-      <h2>À la découverte des premières notions de React</h2>
+      <div className="header-texts">
+        <h1>Dashboard React</h1>
+        <h2>Gestion des notes et étudiants</h2>
+      </div>
     </header>
   );
 }
 
 export default Header;
-

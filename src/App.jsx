@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header from "./compenents/Header";
 import Footer from "./compenents/Footer";
 import Menu from "./compenents/Menu";
@@ -7,39 +6,40 @@ import Students from "./compenents/Students";
 import Subjects from "./compenents/Subjects";
 import About from "./compenents/About";
 import "./App.css";
+// 1. Import des composants de Routing
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 function App() {
-  const [activePage, setActivePage] = useState("Notes");
-
-  const renderContent = () => {
-    switch (activePage) {
-      case "Notes":
-        return <Notes />;
-      case "Étudiants":
-        return <Students />;
-      case "Matières":
-        return <Subjects />;
-      case "À propos":
-        return <About />;
-      default:
-        return <Notes />;
-    }
-  };
+  // Le hook useLocation nous permet de savoir sur quelle page on est (pour l'animation)
+  const location = useLocation();
 
   return (
     <div className="app">
-      <Menu activePage={activePage} setActivePage={setActivePage} />
-      <Header />
+      <div className="background-blobs">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+      </div>
+
+      {/* Le Menu n'a plus besoin de props ! Il gère ses liens tout seul */}
+      <Menu />
       
-      {/* L'ajout de key={activePage} force React à détruire et recréer ce bloc 
-         à chaque changement de page, ce qui déclenche l'animation "fade-in".
-      */}
-      <div 
-        key={activePage} 
-        className="fade-in" 
-        style={{ width: "90%", maxWidth: "800px", margin: "0 auto 100px" }}
-      >
-         {renderContent()}
+      <div className="content-area">
+        <Header />
+        
+        {/* Zone de contenu dynamique gérée par le Routeur */}
+        <div key={location.pathname} className="fade-in">
+           <Routes>
+              {/* Si l'URL est /notes, on affiche <Notes /> */}
+              <Route path="/notes" element={<Notes />} />
+              <Route path="/etudiants" element={<Students />} />
+              <Route path="/matieres" element={<Subjects />} />
+              <Route path="/a-propos" element={<About />} />
+              
+              {/* Route par défaut : Si l'utilisateur arrive sur la racine "/", on le redirige vers "/notes" */}
+              <Route path="/" element={<Navigate to="/notes" replace />} />
+           </Routes>
+        </div>
       </div>
 
       <Footer />
